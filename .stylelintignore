@@ -1,0 +1,8 @@
+node_modules
+dist
+*.js
+*.ts
+*.jsx
+*.tsx
+*.json
+*.md 
