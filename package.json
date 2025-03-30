@@ -60,17 +60,5 @@
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ],
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{css,less,vue}": [
-      "stylelint --fix"
-    ],
-    "*.{md,json}": [
-      "prettier --write"
-    ]
-  }
+  ]
 }
