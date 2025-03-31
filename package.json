@@ -18,6 +18,8 @@
   "dependencies": {
     "@vueuse/core": "^13.0.0",
     "axios": "^1.8.4",
+    "element-plus": "^2.9.7",
+    "nprogress": "^0.2.0",
     "pinia": "^3.0.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
@@ -50,6 +52,8 @@
     "stylelint-config-standard-vue": "^1.0.0",
     "stylelint-order": "^6.0.4",
     "typescript": "~5.8.0",
+    "unplugin-auto-import": "^19.1.2",
+    "unplugin-vue-components": "^28.4.1",
     "vite": "^6.2.1",
     "vite-plugin-imagemin": "^0.6.1",
     "vite-plugin-stylelint": "^5.3.1",

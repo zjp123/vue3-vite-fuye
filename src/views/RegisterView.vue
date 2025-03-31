@@ -1,22 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { useUserStore } from '@/stores/user'
-import { usePermissionStore } from '@/stores/permission'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const route = useRoute()
-const userStore = useUserStore()
-const permissionStore = usePermissionStore()
-
 const username = ref('')
+const email = ref('')
 const password = ref('')
+const confirmPassword = ref('')
 const loading = ref(false)
 const errorMessage = ref('')
 
-const handleLogin = async () => {
-  if (!username.value || !password.value) {
-    errorMessage.value = '请输入用户名和密码'
+const handleRegister = async () => {
+  // 表单验证
+  if (!username.value || !email.value || !password.value) {
+    errorMessage.value = '请填写所有必填字段'
+    return
+  }
+
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = '两次输入的密码不一致'
     return
   }
 
@@ -24,23 +26,13 @@ const handleLogin = async () => {
     loading.value = true
     errorMessage.value = ''
 
-    // 调用登录
-    const success = await userStore.login(username.value, password.value)
+    // 模拟注册请求
+    await new Promise((resolve) => setTimeout(resolve, 1000))
 
-    if (success && userStore.userRole) {
-      // 登录成功，加载动态路由
-      await permissionStore.buildRoutes(userStore.userRole, router)
-
-      // 获取重定向地址
-      const redirectPath = route.query.redirect ? String(route.query.redirect) : '/'
-
-      // 跳转到目标页面
-      router.replace(redirectPath)
-    } else {
-      errorMessage.value = '登录失败，请检查用户名和密码'
-    }
+    // 注册成功，跳转到登录页
+    router.push('/login')
   } catch (error: any) {
-    errorMessage.value = error.message || '登录失败'
+    errorMessage.value = error.message || '注册失败'
   } finally {
     loading.value = false
   }
@@ -48,13 +40,18 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="login-container">
-    <h2>用户登录</h2>
+  <div class="register-container">
+    <h2>用户注册</h2>
 
-    <form @submit.prevent="handleLogin">
+    <form @submit.prevent="handleRegister">
       <div class="form-item">
         <label for="username">用户名</label>
         <input id="username" v-model="username" type="text" placeholder="请输入用户名" />
+      </div>
+
+      <div class="form-item">
+        <label for="email">邮箱</label>
+        <input id="email" v-model="email" type="email" placeholder="请输入邮箱" />
       </div>
 
       <div class="form-item">
@@ -62,21 +59,32 @@ const handleLogin = async () => {
         <input id="password" v-model="password" type="password" placeholder="请输入密码" />
       </div>
 
+      <div class="form-item">
+        <label for="confirmPassword">确认密码</label>
+        <input
+          id="confirmPassword"
+          v-model="confirmPassword"
+          type="password"
+          placeholder="请再次输入密码"
+        />
+      </div>
+
       <div v-if="errorMessage" class="error-message">
         {{ errorMessage }}
       </div>
 
       <button type="submit" :disabled="loading">
-        {{ loading ? '登录中...' : '登录' }}
+        {{ loading ? '注册中...' : '注册' }}
       </button>
+
+      <div class="login-link">已有账号？<router-link to="/login">去登录</router-link></div>
     </form>
   </div>
 </template>
-
 <style lang="less" scoped>
-.login-container {
+.register-container {
   max-width: 400px;
-  margin: 100px auto;
+  margin: 50px auto;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
@@ -132,6 +140,20 @@ const handleLogin = async () => {
     &:disabled {
       background-color: #a0cfbe;
       cursor: not-allowed;
+    }
+  }
+
+  .login-link {
+    margin-top: 15px;
+    text-align: center;
+
+    a {
+      color: #42b983;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

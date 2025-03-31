@@ -1,10 +1,12 @@
 import { get, post } from '@/utils/http'
+import type { UserRole } from '@/router/types'
 
 // 用户接口返回类型
 interface User {
   id: number
   name: string
   email: string
+  role: UserRole
 }
 
 // 登录参数类型
@@ -14,17 +16,42 @@ interface LoginParams {
 }
 
 // 登录响应类型
-interface LoginResult {
-  token: string
-  user: User
-}
+// interface LoginResult {
+//   token: string
+//   user: User
+// }
 
 /**
  * 用户登录
  * @param params - 登录参数
  */
 export function login(params: LoginParams) {
-  return post<LoginResult>('/user/login', params)
+  // 模拟不同用户角色
+  // 在实际项目中，这部分逻辑应该在后端处理
+  if (params.username === 'admin') {
+    return Promise.resolve({
+      token: 'admin-token',
+      user: {
+        id: 1,
+        name: 'Admin User',
+        email: 'admin@example.com',
+        role: 'admin' as UserRole,
+      },
+    })
+  } else {
+    return Promise.resolve({
+      token: 'user-token',
+      user: {
+        id: 2,
+        name: 'Normal User',
+        email: 'user@example.com',
+        role: 'user' as UserRole,
+      },
+    })
+  }
+
+  // 实际项目中应该调用API
+  // return post<LoginResult>('/user/login', params)
 }
 
 /**

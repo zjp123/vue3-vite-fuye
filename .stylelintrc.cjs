@@ -99,7 +99,7 @@ module.exports = {
     'property-no-vendor-prefix': null,
     'value-no-vendor-prefix': null,
     // 禁止使用 !important
-    'declaration-no-important': true,
+    'declaration-no-important': null,
     // 允许 Vue scoped 属性
     'selector-pseudo-class-no-unknown': [
       true,

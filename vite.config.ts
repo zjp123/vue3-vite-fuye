@@ -1,10 +1,12 @@
-import { fileURLToPath, URL } from 'node:url'
-
+import path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import viteImagemin from 'vite-plugin-imagemin';
+import viteImagemin from 'vite-plugin-imagemin'
 import stylelint from 'vite-plugin-stylelint'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -14,41 +16,47 @@ export default defineConfig({
     viteImagemin({
       gifsicle: {
         optimizationLevel: 7,
-        interlaced: false
+        interlaced: false,
       },
       optipng: {
-        optimizationLevel: 7
+        optimizationLevel: 7,
       },
       mozjpeg: {
-        quality: 80
+        quality: 80,
       },
       pngquant: {
         quality: [0.8, 0.9],
-        speed: 4
+        speed: 4,
       },
       svgo: {
         plugins: [
           {
-            name: 'removeViewBox'
+            name: 'removeViewBox',
           },
           {
             name: 'removeEmptyAttrs',
-            active: false
-          }
-        ]
+            active: false,
+          },
+        ],
       },
       webp: {
-        quality: 80
-      }
+        quality: 80,
+      },
     }),
     stylelint({
       fix: true,
-      include: ['src/**/*.{vue,less,css}']
-    })
+      include: ['src/**/*.{vue,less,css}'],
+    }),
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': path.resolve(__dirname, './src'),
     },
   },
   css: {
@@ -57,14 +65,14 @@ export default defineConfig({
         javascriptEnabled: true,
         // 如果需要全局变量，可以在这里添加
         // additionalData: `@import "@/assets/styles/variables.less";`
-      }
+      },
     },
     // 确保 PostCSS 配置被应用
     postcss: {
       plugins: [
         // 这里可以是空的，因为我们已经在 postcss.config.js 中配置了插件
-      ]
-    }
+      ],
+    },
   },
   // 图片资源优化配置
   build: {
@@ -86,5 +94,5 @@ export default defineConfig({
     //     entryFileNames: 'assets/js/[name]-[hash].js'
     //   }
     // }
-  }
+  },
 })

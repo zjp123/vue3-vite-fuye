@@ -1,9 +1,24 @@
+/* 
+  使用@import确实会带来一些性能问题:
+  1. 浏览器需要额外的HTTP请求来加载被导入的CSS文件
+  2. 在CSS文件被完全下载和解析之前会阻塞页面渲染
+  3. 串行加载会增加总体加载时间
+
+  建议改用:
+  1. 在构建时使用打包工具(如Vite)将CSS文件合并
+  2. 在HTML中使用多个<link>标签并行加载CSS
+  3. 或在main.ts中直接导入CSS:
+     import './assets/base.css'
+     import './assets/main.css'
+*/
 @import url('./base.css');
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  /* max-width: 1280px; */
+
+  /* margin: 0 auto; */
+
+  /* padding: 2rem; */
   font-weight: normal;
 }
 
@@ -21,7 +36,7 @@ a,
   }
 }
 
-@media (width >= 1024px) {
+/* @media (width >= 1024px) {
   body {
     display: flex;
     place-items: center;
@@ -32,4 +47,4 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
-}
+} */

@@ -1,0 +1,17 @@
+/* 修改进度条颜色 */
+#nprogress .bar {
+  height: 3px !important;
+  background: #42b983 !important; /* 使用 Vue 绿色 */
+}
+
+/* 修改右侧小圆圈的样式 */
+#nprogress .spinner-icon {
+  border-top-color: #42b983 !important;
+  border-left-color: #42b983 !important;
+}
+
+/* 修改加载中圆圈的位置 */
+#nprogress .spinner {
+  top: 15px;
+  right: 15px;
+} 
