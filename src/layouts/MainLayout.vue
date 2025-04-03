@@ -5,7 +5,7 @@
       <div class="logo">
         <router-link to="/">
           <img src="@/assets/logo.svg" alt="Logo" />
-          <span>Vue3 Admin888</span>
+          <span>Vue3 Admin666888</span>
         </router-link>
       </div>
 
