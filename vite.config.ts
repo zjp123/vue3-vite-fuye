@@ -14,7 +14,10 @@ export default defineConfig(({ mode }) => {
   const folder = `aaa/${mode}/${version}`
   const publicDir = `https://aliyun/pro/${folder}` // 发布远程地址
   const config = loadEnv(mode, process.cwd()) // 加载环境变量
-  console.log('config', mode, config)
+  console.log('==== Vite Configuration ====')
+  console.log('Mode:', mode)
+  console.log('API Server:', config.VITE_API_SERVER)
+  console.log('========================')
   return {
     base: mode === 'production' ? publicDir : '/',
     plugins: [
@@ -109,7 +112,23 @@ export default defineConfig(({ mode }) => {
           target: config.VITE_API_SERVER,
           changeOrigin: true,
           secure: true,
-          rewrite: (path) => path.replace(/\/api/, ''),
+          // rewrite: (path) => path.replace(/\/api/, ''),
+
+          // configure: (proxy, options) => {
+          //   console.log('==== Proxy Configuration ====')
+          //   console.log('Target URL:', config.VITE_API_SERVER)
+          //   console.log('========================')
+
+          //   proxy.on('error', (err, req, res) => {
+          //     console.log('Proxy Error:', err, req, res)
+          //   })
+          //   proxy.on('proxyReq', (proxyReq, req, res) => {
+          //     console.log('Sending Request to the Target:', req.method, req.url, res)
+          //   })
+          //   proxy.on('proxyRes', (proxyRes, req, res) => {
+          //     console.log('Received Response from the Target:', proxyRes.statusCode, req.url, res)
+          //   })
+          // },
         },
       },
     },

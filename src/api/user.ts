@@ -53,7 +53,7 @@ export function login(params: LoginParams) {
   // }
 
   // 实际项目中应该调用API
-  return post<LoginResult>('/api/auth/login', params)
+  return post<LoginResult>('/api/auth/login', params, { showLoading: true })
 }
 
 /**

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import type { RequestInterceptors, ApiResponse } from './types'
+import type { RequestInterceptors, ApiResponse, RequestOptions } from './types'
+import { showLoadingSpinner, hideLoadingSpinner, showErrorMessage } from '../message'
 
 // 创建 Axios 类
 class HttpRequest {
@@ -22,19 +23,27 @@ class HttpRequest {
     // 请求拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        // 在发送请求之前做些什么
-        console.log('请求拦截器 - 成功')
+        // 获取自定义配置
+        const customConfig = config as AxiosRequestConfig & RequestOptions
 
-        // 添加 token 到请求头
-        const token = localStorage.getItem('token')
-        if (token && config.headers) {
-          config.headers.Authorization = `Bearer ${token}`
+        // 显示加载提示
+        if (customConfig.showLoading) {
+          showLoadingSpinner()
+        }
+
+        // 处理 token
+        if (customConfig.withToken !== false) {
+          // 默认需要 token
+          const token = localStorage.getItem('token')
+          if (token && config.headers) {
+            config.headers.Authorization = `Bearer ${token}`
+          }
         }
 
         return config
       },
       (error) => {
-        // 对请求错误做些什么
+        hideLoadingSpinner()
         console.log('请求拦截器 - 错误', error)
         return Promise.reject(error)
       },
@@ -43,12 +52,28 @@ class HttpRequest {
     // 响应拦截器
     this.instance.interceptors.response.use(
       (response: AxiosResponse<ApiResponse>) => {
-        console.log('响应拦截器 - 成功')
+        const customConfig = response.config as AxiosRequestConfig & RequestOptions
+
+        // 隐藏加载提示
+        if (customConfig.showLoading) {
+          hideLoadingSpinner()
+        }
 
         const { data } = response
 
         // 根据后端返回的状态码判断请求是否成功
         if (data.code !== 200) {
+          // 如果配置了自定义错误处理，则调用它
+          if (customConfig.customErrorHandler) {
+            customConfig.customErrorHandler(data)
+            return Promise.reject(data)
+          }
+
+          // 是否显示错误提示
+          if (customConfig.showError !== false) {
+            showErrorMessage(data.message)
+          }
+
           console.error(`请求失败: ${data.message}`)
 
           // 处理特定错误码
@@ -66,8 +91,24 @@ class HttpRequest {
         return response
       },
       (error) => {
-        // 对响应错误做点什么
-        console.log('响应拦截器 - 错误', error)
+        const customConfig = error.config as AxiosRequestConfig & RequestOptions
+
+        // 隐藏加载提示
+        if (customConfig.showLoading) {
+          hideLoadingSpinner()
+        }
+
+        // 如果配置了自定义错误处理，则调用它
+        if (customConfig.customErrorHandler) {
+          customConfig.customErrorHandler(error)
+          return Promise.reject(error)
+        }
+
+        // 是否显示错误提示
+        if (customConfig.showError !== false) {
+          const message = error.response?.data?.message || error.message || '未知错误'
+          showErrorMessage(message)
+        }
 
         // 处理网络错误
         if (!error.response) {
