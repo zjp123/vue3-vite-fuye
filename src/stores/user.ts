@@ -41,10 +41,11 @@ export const useUserStore = defineStore('user', () => {
    * @param username 用户名
    * @param password 密码
    */
-  async function login(username: string, password: string) {
+  async function login(email: string, code: string) {
     try {
-      const result = await apiLogin({ username, password })
-
+      // const result = await apiLogin({ username, password })
+      const result = await apiLogin({ email, code })
+      console.log(result, '登录结果')
       // 保存token
       token.value = result.token
       localStorage.setItem('token', result.token)

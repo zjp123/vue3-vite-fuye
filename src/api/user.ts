@@ -11,15 +11,17 @@ interface User {
 
 // 登录参数类型
 interface LoginParams {
-  username: string
-  password: string
+  // username: string
+  // password: string
+  email: string
+  code: string
 }
 
 // 登录响应类型
-// interface LoginResult {
-//   token: string
-//   user: User
-// }
+interface LoginResult {
+  token: string
+  user: User
+}
 
 /**
  * 用户登录
@@ -28,30 +30,30 @@ interface LoginParams {
 export function login(params: LoginParams) {
   // 模拟不同用户角色
   // 在实际项目中，这部分逻辑应该在后端处理
-  if (params.username === 'admin') {
-    return Promise.resolve({
-      token: 'admin-token',
-      user: {
-        id: 1,
-        name: 'Admin User',
-        email: 'admin@example.com',
-        role: 'admin' as UserRole,
-      },
-    })
-  } else {
-    return Promise.resolve({
-      token: 'user-token',
-      user: {
-        id: 2,
-        name: 'Normal User',
-        email: 'user@example.com',
-        role: 'user' as UserRole,
-      },
-    })
-  }
+  // if (params.username === 'admin') {
+  //   return Promise.resolve({
+  //     token: 'admin-token',
+  //     user: {
+  //       id: 1,
+  //       name: 'Admin User',
+  //       email: 'admin@example.com',
+  //       role: 'admin' as UserRole,
+  //     },
+  //   })
+  // } else {
+  //   return Promise.resolve({
+  //     token: 'user-token',
+  //     user: {
+  //       id: 2,
+  //       name: 'Normal User',
+  //       email: 'user@example.com',
+  //       role: 'user' as UserRole,
+  //     },
+  //   })
+  // }
 
   // 实际项目中应该调用API
-  // return post<LoginResult>('/user/login', params)
+  return post<LoginResult>('/api/auth/login', params)
 }
 
 /**
