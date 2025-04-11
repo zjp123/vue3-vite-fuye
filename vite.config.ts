@@ -59,9 +59,18 @@ export default defineConfig(({ mode }) => {
       }),
       AutoImport({
         resolvers: [ElementPlusResolver()],
+        // 不需要在每个文件中写 import { ref } from 'vue'
+        imports: ['vue', 'vue-router'],
+        // dts: 'src/auto-imports.d.ts',
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver({
+            // importStyle: true,
+            // directives: true,
+          }),
+        ],
+        // dts: 'src/components.d.ts',
       }),
     ],
     resolve: {

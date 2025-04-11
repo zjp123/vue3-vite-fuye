@@ -1,7 +1,7 @@
 // 这里使用你项目中的 UI 组件库
 // 例如使用 Element Plus、Ant Design Vue 等
 
-import { ElLoading, ElMessage } from 'element-plus'
+// import { ElLoading, ElMessage } from 'element-plus'
 import type { LoadingInstance } from 'element-plus/lib/components/loading/src/loading'
 
 let loadingInstance: LoadingInstance | null = null

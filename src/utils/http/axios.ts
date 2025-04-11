@@ -62,7 +62,7 @@ class HttpRequest {
         const { data } = response
 
         // 根据后端返回的状态码判断请求是否成功
-        if (data.code !== 200) {
+        if (data.code !== 200 && data.code !== 0) {
           // 如果配置了自定义错误处理，则调用它
           if (customConfig.customErrorHandler) {
             customConfig.customErrorHandler(data)

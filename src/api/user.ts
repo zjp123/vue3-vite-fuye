@@ -1,5 +1,6 @@
 import { get, post } from '@/utils/http'
 import type { UserRole } from '@/router/types'
+import type { RequestOptions } from '@/utils/http/types'
 
 // 用户接口返回类型
 interface User {
@@ -27,7 +28,7 @@ interface LoginResult {
  * 用户登录
  * @param params - 登录参数
  */
-export function login(params: LoginParams) {
+export function login(params: LoginParams, options?: RequestOptions) {
   // 模拟不同用户角色
   // 在实际项目中，这部分逻辑应该在后端处理
   // if (params.username === 'admin') {
@@ -53,7 +54,7 @@ export function login(params: LoginParams) {
   // }
 
   // 实际项目中应该调用API
-  return post<LoginResult>('/api/auth/login', params, { showLoading: true })
+  return post<LoginResult>('/api/auth/login', params, options)
 }
 
 /**

@@ -44,7 +44,12 @@ export const useUserStore = defineStore('user', () => {
   async function login(email: string, code: string) {
     try {
       // const result = await apiLogin({ username, password })
-      const result = await apiLogin({ email, code })
+      const result = await apiLogin(
+        { email, code },
+        {
+          showLoading: true,
+        },
+      )
       console.log(result, '登录结果')
       // 保存token
       token.value = result.token
