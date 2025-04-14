@@ -58,6 +58,15 @@ export function login(params: LoginParams, options?: RequestOptions) {
 }
 
 /**
+ * 管理员用户登录
+ * @param params - 登录参数
+ */
+export function apiAdminLogin(params: LoginParams, options?: RequestOptions) {
+  // 实际项目中应该调用API
+  return post<LoginResult>('/api/auth/admin/login', params, options)
+}
+
+/**
  * 获取用户信息
  * @param id - 用户ID
  */

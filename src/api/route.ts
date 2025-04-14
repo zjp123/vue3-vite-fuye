@@ -6,7 +6,8 @@ const adminRoutes: AppRouteRecordRaw[] = [
   {
     path: '/home',
     name: 'Home',
-    component: () => import('@/views/HomeView.vue'),
+    // component: () => import('@/views/HomeView.vue'),
+    component: 'src/views/HomeView.vue' as any,
     meta: {
       title: '首页',
       requiresAuth: true,
@@ -17,7 +18,8 @@ const adminRoutes: AppRouteRecordRaw[] = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('@/views/AboutView.vue'),
+    // component: () => import('@/views/AboutView.vue'),
+    component: 'src/views/AboutView.vue' as any,
     meta: {
       title: '关于',
       requiresAuth: true,
@@ -28,7 +30,8 @@ const adminRoutes: AppRouteRecordRaw[] = [
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import('@/views/AdminView.vue'),
+    // component: () => import('@/views/AdminView.vue'),
+    component: 'src/views/AdminView.vue' as any,
     meta: {
       title: '管理',
       requiresAuth: true,
@@ -39,7 +42,8 @@ const adminRoutes: AppRouteRecordRaw[] = [
       {
         path: 'users',
         name: 'UserManagement',
-        component: () => import('@/views/admin/UserManagementView.vue'),
+        // component: () => import('@/views/admin/UserManagementView.vue'),
+        component: 'src/views/admin/UserManagementView.vue' as any,
         meta: {
           title: '用户管理',
           requiresAuth: true,
@@ -50,7 +54,8 @@ const adminRoutes: AppRouteRecordRaw[] = [
       {
         path: 'settings',
         name: 'SystemSettings',
-        component: () => import('@/views/admin/SystemSettingsView.vue'),
+        // component: () => import('@/views/admin/SystemSettingsView.vue'),
+        component: 'src/views/admin/SystemSettingsView.vue',
         meta: {
           title: '系统设置',
           requiresAuth: true,
@@ -67,7 +72,8 @@ const userRoutes: AppRouteRecordRaw[] = [
   {
     path: '/home',
     name: 'Home',
-    component: () => import('@/views/HomeView.vue'),
+    // component: () => import('@/views/HomeView.vue'),
+    component: '@/views/HomeView.vue' as any,
     meta: {
       title: '首页',
       requiresAuth: true,
@@ -78,7 +84,8 @@ const userRoutes: AppRouteRecordRaw[] = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('@/views/AboutView.vue'),
+    // component: () => import('@/views/AboutView.vue'),
+    component: '@/views/AboutView.vue' as any,
     meta: {
       title: '关于',
       requiresAuth: true,
@@ -89,7 +96,8 @@ const userRoutes: AppRouteRecordRaw[] = [
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('@/views/ProfileView.vue'),
+    // component: () => import('@/views/ProfileView.vue'),
+    component: 'src/views/ProfileView.vue' as any,
     meta: {
       title: '个人中心',
       requiresAuth: true,

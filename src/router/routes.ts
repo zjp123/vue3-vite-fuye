@@ -13,6 +13,16 @@ export const basicRoutes: AppRouteRecordRaw[] = [
     },
   },
   {
+    path: '/admin-login',
+    name: 'AdminLogin',
+    component: () => import('@/views/AdminLoginView.vue'),
+    meta: {
+      title: '登录',
+      requiresAuth: false,
+      hideInMenu: true,
+    },
+  },
+  {
     path: '/register',
     name: 'Register',
     component: () => import('@/views/RegisterView.vue'),

@@ -13,7 +13,7 @@ const router = createRouter({
 })
 
 // 白名单路由 - 不需要登录也可以访问
-const whiteList = ['/login', '/register', '/404']
+const whiteList = ['/admin-login', '/login', '/register', '/404']
 
 // 路由守卫
 router.beforeEach(
