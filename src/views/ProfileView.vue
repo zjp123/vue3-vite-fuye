@@ -4,7 +4,10 @@
 
     <div class="profile-card" v-if="userStore.userInfo">
       <div class="avatar">
-        <img src="https://via.placeholder.com/100" alt="用户头像" />
+        <img
+          src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+          alt="用户头像"
+        />
         <button class="change-avatar">更换头像</button>
       </div>
 
@@ -54,7 +57,7 @@ const handleLogout = () => {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
 
-    @media (width >= 768px) {
+    @media (width >=768px) {
       flex-direction: row;
       align-items: flex-start;
     }
@@ -63,7 +66,7 @@ const handleLogout = () => {
       margin-bottom: 20px;
       text-align: center;
 
-      @media (width >= 768px) {
+      @media (width >=768px) {
         margin-right: 30px;
         margin-bottom: 0;
       }

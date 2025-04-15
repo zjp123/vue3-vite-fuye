@@ -1,14 +1,11 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
-    <div class="postcss-test">
-      <p>Testing PostCSS features</p>
-    </div>
+    <h2>如有业务需求请联系客服</h2>
   </div>
 </template>
 
 <style>
-@media (width >= 1024px) {
+@media (width >=1024px) {
   .about {
     display: flex;
     align-items: center;
@@ -24,7 +21,7 @@
     padding: 20px;
     background-color: #f5f5f5;
     border-radius: 8px;
-    
+
     & p {
       grid-column: span 3;
       color: #42b983;

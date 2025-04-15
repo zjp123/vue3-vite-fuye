@@ -1,76 +1,55 @@
 <script setup lang="ts">
 // import TheWelcome from '../components/TheWelcome.vue'
 // import ResponsiveImage from '../components/ResponsiveImage.vue'
+import UpLoadCom from '@/components/UpLoad.vue'
 import { getResourcesApi } from '@/api'
-watchEffect(() => {
-  getResourcesApi({})
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+const centerDialogVisible = ref(false)
+const uploadRef = ref()
+let dataList = reactive([])
+
+onMounted(async () => {
+  const response = await getResourcesApi({}, { showLoading: true })
+  dataList = Object.assign(dataList, response.data)
 })
 
 const handleClick = () => {
   console.log('click')
 }
+const openModal = () => {
+  centerDialogVisible.value = true
+}
 
-const tableData = reactive([
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Home',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Office',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Home',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-    tag: 'Office',
-  },
-])
+const submit = () => {
+  console.log('uploadRef', uploadRef)
+  uploadRef.value.submit()
+}
 </script>
 
 <template>
   <main id="home-main">
-    <div class="table-title">资源列表</div>
+    <div style="display: flex; justify-content: space-between; padding: 10px">
+      <div class="table-title">资源列表</div>
+      <div>
+        <el-button plain @click="openModal"> 上传资源 </el-button>
+      </div>
+    </div>
     <section>
-      <el-table :data="tableData" class="table-box">
-        <el-table-column fixed prop="date" label="时间" width="150" />
-        <el-table-column prop="name" label="Name" width="120" />
-        <el-table-column prop="state" label="State" width="120" />
-        <el-table-column prop="city" label="City" width="120" />
-        <el-table-column prop="address" label="Address" width="600" />
-        <el-table-column prop="zip" label="Zip" width="120" />
-        <el-table-column fixed="right" label="操作" min-width="120">
+      <el-table :data="dataList" class="table-box">
+        <el-table-column fixed prop="created_at" label="时间" width="150">
+          <template #default="{ row }">
+            {{ new Date(row.created_at).toLocaleString() }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="file_name" label="名称" />
+        <el-table-column prop="file_path" label="路径" />
+        <el-table-column prop="file_size" label="类型" />
+        <el-table-column prop="file_type" label="大小" />
+        <el-table-column fixed="right" label="操作" width="120">
           <template #default>
-            <el-button link type="primary" size="small" @click="handleClick"> 详情 </el-button>
-            <el-button link type="primary" size="small">编辑</el-button>
+            <el-button :disabled="true" link type="primary" size="small" @click="handleClick">
+              详情
+            </el-button>
+            <el-button :disabled="true" link type="primary" size="small">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -88,6 +67,17 @@ const tableData = reactive([
         <img v-lazy="'/src/assets/example.webp'" alt="懒加载示例" class="lazy-image" />
       </div> -->
     </section>
+    <el-dialog destroy-on-close v-model="centerDialogVisible" title="上传" width="500" align-center>
+      <div>
+        <UpLoadCom ref="uploadRef" :action="'/api/upload'" :autoUpload="false" :headers="{}" />
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="submit"> 确定 </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </main>
 </template>
 
@@ -99,7 +89,6 @@ main {
   background-color: #fff;
 
   .table-title {
-    padding: 10px;
     font-size: 16px;
     font-weight: bold;
   }

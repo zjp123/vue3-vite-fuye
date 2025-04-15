@@ -54,7 +54,8 @@ export const useUserStore = defineStore('user', () => {
       console.log(result, '管理员登录结果')
       // 保存token
       token.value = result.data
-      localStorage.setItem('token', result.token)
+      // localStorage.setItem('token', result.token)
+      localStorage.setItem('token', result.data)
 
       // 保存用户信息--标准版
       // userInfo.value = {
@@ -102,7 +103,8 @@ export const useUserStore = defineStore('user', () => {
       console.log(result, '登录结果')
       // 保存token
       token.value = result.data
-      localStorage.setItem('token', result.token)
+      // localStorage.setItem('token', result.token)
+      localStorage.setItem('token', result.data)
 
       // 保存用户信息--标准版
       // userInfo.value = {

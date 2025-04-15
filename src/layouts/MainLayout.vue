@@ -25,7 +25,11 @@
       <div class="user-menu">
         <template v-if="userStore.isLoggedIn">
           <div class="user-info" @click="toggleUserDropdown">
-            <img src="https://via.placeholder.com/36" alt="用户头像" class="avatar" />
+            <img
+              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+              alt="用户头像"
+              class="avatar"
+            />
             <span>{{ userStore.userInfo?.name }}</span>
             <i class="dropdown-icon">▼</i>
 
